@@ -1,13 +1,8 @@
 // middleware/errorMiddleware.js
 
-function errorMiddleware(err, req, res, next) {
-    const statusCode = err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(statusCode).json({
-        message,
-        stack: process.env.NODE_ENV === "production" ? null : err.stack,
-    });
-}
+const errorMiddleware = (err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+};
 
 export default errorMiddleware;

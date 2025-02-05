@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet"; // Import helmet
 import connectDB from './config/dbConfig.js';
 import config from './config/envConfig.js';
 import authMiddleware from "./middleware/authMiddleware.js";
@@ -16,6 +17,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(helmet()); // Use helmet for security
 app.use(loggerMiddleware); // Log incoming requests
 
 // Routes
