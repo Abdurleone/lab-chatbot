@@ -1,10 +1,12 @@
-export const presets = [
-  "@babel/preset-env"
-];
-export const plugins = [
-  "@babel/plugin-transform-modules-commonjs"
-];
-export const transform = {
-  "^.+\\.jsx?$": "babel-jest"
+module.exports = {
+  presets: [
+    "@babel/preset-env"
+  ],
+  plugins: [
+    "@babel/plugin-transform-modules-commonjs"
+  ],
+  transform: {
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  testEnvironment: "node"
 };
-export const testEnvironment = "node";
