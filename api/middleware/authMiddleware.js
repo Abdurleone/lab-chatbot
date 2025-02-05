@@ -1,20 +1,25 @@
-import authMiddleware from './middleware/authMiddleware.js';
+import jwt from "jsonwebtoken";
 
-// middleware/authMiddleware.js
-
-function authMiddleware(req, res, next) {
+const authMiddleware = (req, res, next) => {
     const token = req.headers["authorization"];
-
+    
     if (!token) {
         return res.status(403).json({ error: "Access Denied, No Token Provided" });
     }
 
-    // For now, let's just simulate a basic check
-    if (token === "Bearer sample_token") {
-        next(); // Token is valid, proceed to the next middleware/route handler
-    } else {
+    // Remove the "Bearer " prefix (if exists) and get the token part
+    const tokenPart = token.startsWith("Bearer ") ? token.slice(7, token.length) : token;
+
+    try {
+        // Verify the token using the secret key (stored in .env for security)
+        const decoded = jwt.verify(tokenPart, process.env.JWT_SECRET_KEY);
+
+        // Attach the decoded user info to the request object
+        req.user = decoded; 
+        next(); // Proceed to the next middleware or route handler
+    } catch (err) {
         return res.status(401).json({ error: "Invalid Token" });
     }
-}
+};
 
 export default authMiddleware;

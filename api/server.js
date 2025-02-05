@@ -5,6 +5,7 @@ import config from './config/envConfig.js';
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
+import userController from "./controllers/userController.js"; // Import the user controller
 
 const app = express();
 const PORT = config.PORT || 5000;
@@ -23,6 +24,9 @@ app.use(loggerMiddleware); // Log incoming requests
 app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
 });
+
+// Login Route
+app.post("/api/login", userController.loginUser); // Login route
 
 // Protecting routes with authMiddleware
 app.get("/api/protected", authMiddleware, (_, res) => {

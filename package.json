@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
     "cra-template": "1.2.0",
+    "jsonwebtoken": "^9.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
@@ -45,6 +47,8 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
     "testEnvironment": "node",
-    "transformIgnorePatterns": ["/node_modules/(?!supertest)/"]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!supertest)/"
+    ]
   }
 }
