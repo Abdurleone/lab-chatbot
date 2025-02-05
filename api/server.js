@@ -87,6 +87,20 @@ app.post("/api/appointments", (req, res) => {
     res.status(201).json({ message: "Appointment booked successfully!", appointment: newAppointment });
 });
 
+// Chat Route (POST)
+app.post("/api/chat", (req, res) => {
+    const { message } = req.body;
+
+    if (!message) {
+        return res.status(400).json({ error: "Message is required!" });
+    }
+
+    // Dummy response for now
+    const response = { reply: `You said: ${message}` };
+    console.log("Chat Message Received:", message);
+    res.json(response);
+});
+
 // Start Server
 app.listen(PORT, () => {
     console.log(`✅ API running on port ${PORT}`);
