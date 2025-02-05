@@ -1,8 +1,13 @@
 import express from "express";
 import cors from "cors";
+import connectDB from './config/dbConfig.js';
+import config from './config/envConfig.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = config.PORT || 5000;
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(express.json()); // Allows API to handle JSON requests
@@ -106,4 +111,4 @@ app.listen(PORT, () => {
     console.log(`✅ API running on port ${PORT}`);
 });
 
-export default app
+export default app;
