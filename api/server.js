@@ -105,3 +105,5 @@ app.post("/api/chat", (req, res) => {
 app.listen(PORT, () => {
     console.log(`✅ API running on port ${PORT}`);
 });
+
+export default app
