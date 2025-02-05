@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 const availableTests = ["Blood Test", "X-Ray", "MRI", "COVID-19 Test"];
 
@@ -7,4 +7,4 @@ router.get("/tests", (req, res) => {
   res.json({ tests: availableTests });
 });
 
-module.exports = router;
+export default router;

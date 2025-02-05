@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 router.post("/book", (req, res) => {
   const { name, date, time } = req.body;
@@ -9,4 +9,4 @@ router.post("/book", (req, res) => {
   res.json({ message: `Appointment booked for ${name} on ${date} at ${time}.` });
 });
 
-module.exports = router;
+export default router;

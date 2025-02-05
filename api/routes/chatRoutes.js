@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 const responses = {
   "hello": "Hello! How can I assist you today?",
@@ -14,4 +14,4 @@ router.post("/", (req, res) => {
   res.json({ reply });
 });
 
-module.exports = router;
+export default router;

@@ -1,30 +1,82 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.json());
-// Import Routes
-const chatRoutes = require("./routes/chatRoutes");
-const appointmentRoutes = require("./routes/appointmentRoutes");
-const labRoutes = require("./routes/labRoutes");
-const resultRoutes = require("./routes/resultRoutes");
-const priceRoutes = require("./routes/priceRoutes");
+const PORT = process.env.PORT || 5000;
 
-// Use Routes
-app.use("/chat", chatRoutes);
-app.use("/appointments", appointmentRoutes);
-app.use("/labs", labRoutes);
-app.use("/results", resultRoutes);
-app.use("/prices", priceRoutes);
+// Middleware
+app.use(express.json()); // Allows API to handle JSON requests
+app.use(cors()); // Enables cross-origin requests
 
-// Root Route
+// Dummy data for now
+const labServices = {
+    tests: [
+        { id: 1, name: "Blood Test", price: "$50", estimated_time: "24 hours" },
+        { id: 2, name: "COVID-19 PCR Test", price: "$80", estimated_time: "12 hours" },
+        { id: 3, name: "Urine Test", price: "$30", estimated_time: "8 hours" }
+    ],
+    appointments: [
+        { id: 1, patient: "John Doe", test: "Blood Test", status: "Confirmed" },
+        { id: 2, patient: "Jane Smith", test: "COVID-19 PCR Test", status: "Pending" }
+    ]
+};
+
+// Routes
+
+// Home Route
 app.get("/", (req, res) => {
-  res.send("API is running...");
+    res.send("Welcome to the Medical Lab Chatbot API!");
+});
+
+// Inquiry Route
+app.get("/api/inquiry", (req, res) => {
+    const response = { message: "How can I assist you with lab services today?" };
+    console.log("Response Sent:", response);
+    res.json(response);
+});
+
+// Get List of Available Tests & Prices
+app.get("/api/tests", (req, res) => {
+    console.log("Fetching test list...");
+    res.json({ tests: labServices.tests });
+});
+
+// Get Status of Lab Results (Dummy Data)
+app.get("/api/results/:patientName", (req, res) => {
+    const { patientName } = req.params;
+    const result = labServices.appointments.find(a => a.patient.toLowerCase() === patientName.toLowerCase());
+
+    if (result) {
+        const response = { patient: patientName, test: result.test, status: result.status };
+        console.log("Result Status Fetched:", response);
+        res.json(response);
+    } else {
+        console.log(`No results found for ${patientName}`);
+        res.status(404).json({ error: "No test results found for this patient." });
+    }
+});
+
+// Book an Appointment (POST)
+app.post("/api/appointments", (req, res) => {
+    const { patient, test } = req.body;
+
+    if (!patient || !test) {
+        return res.status(400).json({ error: "Patient name and test are required!" });
+    }
+
+    const newAppointment = {
+        id: labServices.appointments.length + 1,
+        patient,
+        test,
+        status: "Pending"
+    };
+
+    labServices.appointments.push(newAppointment);
+    console.log("New Appointment Created:", newAppointment);
+    res.status(201).json({ message: "Appointment booked successfully!", appointment: newAppointment });
 });
 
 // Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`API running on port ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`✅ API running on port ${PORT}`);
+});

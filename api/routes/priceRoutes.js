@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 const testPrices = {
   "Blood Test": "$50",
@@ -14,4 +14,4 @@ router.get("/:testName", (req, res) => {
   res.json({ price });
 });
 
-module.exports = router;
+export default router;

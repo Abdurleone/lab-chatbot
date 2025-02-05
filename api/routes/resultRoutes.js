@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 const resultsStatus = {
   "12345": "Your test results are ready. Please check your email.",
@@ -12,4 +12,4 @@ router.get("/:testId", (req, res) => {
   res.json({ status });
 });
 
-module.exports = router;
+export default router;
