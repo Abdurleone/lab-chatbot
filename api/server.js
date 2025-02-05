@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import connectDB from './config/dbConfig.js';
 import config from './config/envConfig.js';
+import authMiddleware from "./middleware/authMiddleware.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
+import loggerMiddleware from "./middleware/loggerMiddleware.js";
 
 const app = express();
 const PORT = config.PORT || 5000;
@@ -10,27 +13,20 @@ const PORT = config.PORT || 5000;
 connectDB();
 
 // Middleware
-app.use(express.json()); // Allows API to handle JSON requests
-app.use(cors()); // Enables cross-origin requests
-
-// Dummy data for now
-const labServices = {
-    tests: [
-        { id: 1, name: "Blood Test", price: "$50", estimated_time: "24 hours" },
-        { id: 2, name: "COVID-19 PCR Test", price: "$80", estimated_time: "12 hours" },
-        { id: 3, name: "Urine Test", price: "$30", estimated_time: "8 hours" }
-    ],
-    appointments: [
-        { id: 1, patient: "Yahya AbdulKadir", test: "Blood Test", status: "Confirmed" },
-        { id: 2, patient: "Jane Smith", test: "COVID-19 PCR Test", status: "Pending" }
-    ]
-};
+app.use(express.json());
+app.use(cors());
+app.use(loggerMiddleware); // Log incoming requests
 
 // Routes
 
 // Home Route
 app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
+});
+
+// Protecting routes with authMiddleware
+app.get("/api/protected", authMiddleware, (_, res) => {
+    res.send("This is a protected route!");
 });
 
 // Inquiry Route
@@ -105,6 +101,9 @@ app.post("/api/chat", (req, res) => {
     console.log("Chat Message Received:", message);
     res.json(response);
 });
+
+// Error Handling Middleware (last)
+app.use(errorMiddleware);
 
 // Start Server
 app.listen(PORT, () => {
