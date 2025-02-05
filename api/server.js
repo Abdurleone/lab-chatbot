@@ -1,5 +1,5 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,7 +16,7 @@ const labServices = {
         { id: 3, name: "Urine Test", price: "$30", estimated_time: "8 hours" }
     ],
     appointments: [
-        { id: 1, patient: "John Doe", test: "Blood Test", status: "Confirmed" },
+        { id: 1, patient: "Yahya AbdulKadir", test: "Blood Test", status: "Confirmed" },
         { id: 2, patient: "Jane Smith", test: "COVID-19 PCR Test", status: "Pending" }
     ]
 };
@@ -24,21 +24,32 @@ const labServices = {
 // Routes
 
 // Home Route
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
 });
 
 // Inquiry Route
-app.get("/api/inquiry", (req, res) => {
+app.get("/api/inquiry", (_, res) => {
     const response = { message: "How can I assist you with lab services today?" };
     console.log("Response Sent:", response);
     res.json(response);
 });
 
 // Get List of Available Tests & Prices
-app.get("/api/tests", (req, res) => {
+app.get("/api/tests", (_, res) => {
     console.log("Fetching test list...");
     res.json({ tests: labServices.tests });
+});
+
+// Get Prices Route
+app.get("/api/prices", (_, res) => {
+    const prices = labServices.tests.map(test => ({
+        name: test.name,
+        price: test.price,
+    }));
+
+    console.log("Fetching prices...");
+    res.json({ prices });
 });
 
 // Get Status of Lab Results (Dummy Data)
