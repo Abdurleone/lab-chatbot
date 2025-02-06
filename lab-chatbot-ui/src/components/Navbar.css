@@ -1,11 +1,11 @@
 .navbar {
-  background-color: #1e3a8a; /* Tailwind's blue-600 */
+  background-color: #1e3a8a;
   padding: 1rem;
   color: white;
 }
 
 .navbar h1 {
-  font-size: 1.25rem; /* Tailwind's text-xl */
+  font-size: 1.25rem;
   font-weight: bold;
 }
 
