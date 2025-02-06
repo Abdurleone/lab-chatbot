@@ -1,10 +1,13 @@
+import React from "react";
 import MessageBubble from "./MessageBubble";
 
 function ChatWindow({ messages }) {
   return (
-    <div className="p-4 border rounded-lg h-96 overflow-y-auto">
-      {messages.map((msg, index) => (
-        <MessageBubble key={index} text={msg.text} sender={msg.sender} />
+    <div className="chat-window">
+      {messages.map((message, index) => (
+        <div key={index} className={`message ${message.sender}`}>
+          {message.text}
+        </div>
       ))}
     </div>
   );

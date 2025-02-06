@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import ChatWindow from "../components/ChatWindow";
 import MessageInput from "../components/MessageInput";
 
@@ -7,13 +8,16 @@ function Chatbot() {
     { text: "Hello! How can I assist you today?", sender: "bot" }
   ]);
 
-  const handleSend = (message) => {
+  const handleSend = async (message) => {
     setMessages([...messages, { text: message, sender: "user" }]);
 
-    // Simulating bot response (replace with real API later)
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { text: "I'm still learning. Ask me anything!", sender: "bot" }]);
-    }, 1000);
+    try {
+      const response = await axios.post("http://localhost:5000/api/chat", { message });
+      setMessages((prev) => [...prev, { text: response.data.reply, sender: "bot" }]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages((prev) => [...prev, { text: "Sorry, something went wrong. Please try again.", sender: "bot" }]);
+    }
   };
 
   return (

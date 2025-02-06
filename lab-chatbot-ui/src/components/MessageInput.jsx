@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function MessageInput({ onSend }) {
   const [message, setMessage] = useState("");
@@ -12,15 +12,15 @@ function MessageInput({ onSend }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
-      <input 
-        type="text" 
-        className="border p-2 w-full rounded-lg"
-        value={message} 
-        onChange={(e) => setMessage(e.target.value)} 
-        placeholder="Type a message..."
+    <form onSubmit={handleSubmit} className="message-input">
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type your message..."
+        className="input"
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg">Send</button>
+      <button type="submit" className="send-button">Send</button>
     </form>
   );
 }
