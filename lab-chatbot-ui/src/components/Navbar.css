@@ -2,19 +2,26 @@
   background-color: #1e3a8a;
   padding: 1rem;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar h1 {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .navbar ul {
-  display: flex;
-  gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar ul li {
+  display: inline;
 }
 
 .navbar ul li a {

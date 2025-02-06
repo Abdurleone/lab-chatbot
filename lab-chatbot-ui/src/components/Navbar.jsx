@@ -3,11 +3,12 @@ import './Navbar.css';
 
 function Navbar() {
   return (
-    <nav className="bg-blue-600 p-4 text-white">
-      <h1 className="text-xl font-bold">Lab Chatbot</h1>
-      <ul className="flex gap-4">
+    <nav className="navbar">
+      <h1>Lab Chatbot</h1>
+      <ul>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/chatbot">Chatbot</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/chatbox">Chatbox</Link></li>
       </ul>
     </nav>
   );

@@ -1,12 +1,13 @@
 .home {
   padding: 2rem;
   text-align: center;
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: white;
 }
 
 .home-header {
@@ -15,13 +16,13 @@
 
 .home-header h1 {
   font-size: 3rem;
-  color: #1e3a8a;
+  color: white;
   margin-bottom: 1rem;
 }
 
 .home-header p {
   font-size: 1.25rem;
-  color: #666;
+  color: #d1d5db;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -40,6 +41,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
   transition: transform 0.3s, box-shadow 0.3s;
+  color: #1e3a8a;
 }
 
 .home-card:hover {
