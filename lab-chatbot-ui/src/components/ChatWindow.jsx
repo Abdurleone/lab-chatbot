@@ -1,7 +1,7 @@
 import React from "react";
-import MessageBubble from "./MessageBubble";
+import './ChatWindow.css';
 
-function ChatWindow({ messages }) {
+function ChatWindow({ messages, isTyping }) {
   return (
     <div className="chat-window">
       {messages.map((message, index) => (
@@ -9,6 +9,7 @@ function ChatWindow({ messages }) {
           {message.text}
         </div>
       ))}
+      {isTyping && <div className="message bot">Typing...</div>}
     </div>
   );
 }

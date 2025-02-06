@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "add axios",
+			"group": "build",
+			"label": "npm: add axios",
+			"detail": "Add axios package",
+			"presentation": {
+				"reveal": "silent"
+			}
+		}
+	]
+}
