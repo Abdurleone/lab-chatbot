@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Chatbot from "../pages/Chatbot";
-import NotFound from "../pages/NotFound";
+import Home from "../pages/Home.jsx";
+import Chatbot from "../pages/Chatbot.jsx";
+import NotFound from "../pages/NotFound.jsx";
 
 const AppRoutes = () => {
   return (

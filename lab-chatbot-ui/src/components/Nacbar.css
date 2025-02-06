@@ -1,0 +1,27 @@
+.navbar {
+  background-color: #1e3a8a; /* Tailwind's blue-600 */
+  padding: 1rem;
+  color: white;
+}
+
+.navbar h1 {
+  font-size: 1.25rem; /* Tailwind's text-xl */
+  font-weight: bold;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar ul li a:hover {
+  text-decoration: underline;
+}
