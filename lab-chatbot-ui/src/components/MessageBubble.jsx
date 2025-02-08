@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function MessageBubble({ text, sender }) {
     const isUser = sender === "user";
     return (
@@ -6,5 +8,10 @@ function MessageBubble({ text, sender }) {
       </div>
     );
 }
+
+MessageBubble.propTypes = {
+    text: PropTypes.string.isRequired,
+    sender: PropTypes.string.isRequired,
+};
 
 export default MessageBubble;

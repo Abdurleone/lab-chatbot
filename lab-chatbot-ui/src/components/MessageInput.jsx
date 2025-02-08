@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 function MessageInput({ onSend }) {
   const [message, setMessage] = useState("");
@@ -24,5 +25,8 @@ function MessageInput({ onSend }) {
     </form>
   );
 }
+MessageInput.propTypes = {
+  onSend: PropTypes.func.isRequired,
+};
 
 export default MessageInput;
