@@ -10,6 +10,18 @@
 			"presentation": {
 				"reveal": "silent"
 			}
+		},
+		{
+			"type": "shell",
+			"label": "yarn install",
+			"command": "yarn",
+			"args": [
+				"install"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "silent"
+			}
 		}
 	]
 }
