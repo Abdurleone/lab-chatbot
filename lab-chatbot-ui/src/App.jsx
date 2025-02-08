@@ -3,6 +3,7 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Chatbox from "./pages/Chatbox.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Results from "./pages/Results.jsx";
 import './App.css';
 
 function AppRoutes() {
@@ -15,6 +16,7 @@ function AppRoutes() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/chatbox" element={<Chatbox />} />
+            <Route path="/results" element={<Results />} />
           </Routes>
         </main>
       </div>
