@@ -22,6 +22,18 @@
 			"presentation": {
 				"reveal": "silent"
 			}
+		},
+		{
+			"type": "shell",
+			"label": "npm install",
+			"command": "npm",
+			"args": [
+				"install"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "silent"
+			}
 		}
 	]
 }
