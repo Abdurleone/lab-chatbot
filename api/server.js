@@ -7,7 +7,7 @@ import config from './config/envConfig.js';
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
-import userController from "./controllers/userController.js"; // Import the user controller
+import { registerUser, loginUser } from "./controllers/userController.js"; // Import the user controller
 import resultsRouter from './routes/results.js';
 
 const app = express();
@@ -35,8 +35,9 @@ app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
 });
 
-// Login Route
-app.post("/api/login", userController.loginUser); // Login route
+// User Routes
+app.post('/api/users/register', registerUser);
+app.post('/api/users/login', loginUser);
 
 // Protecting routes with authMiddleware
 app.get("/api/protected", authMiddleware, (_, res) => {
@@ -116,7 +117,7 @@ app.post("/api/chat", (req, res) => {
     res.json(response);
 });
 
-app.use('/api/results', resultsRouter);
+app.use('/api/results', authMiddleware, resultsRouter);
 
 // Error Handling Middleware (last)
 app.use(errorMiddleware);

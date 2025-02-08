@@ -2,43 +2,82 @@
 
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import User from '../models/User.js'; // Assuming you have a User model
 
-// Mock user data (replace with database logic later)
-const users = [
-    { id: 1, username: "user1", password: "$2a$10$U4u/0S8j0O0A6ftGH35CfeGG68ZpqjzAqxn5ZZ5jATzM7WRbAw5iu" }, // password: 'password123'
-];
+// Register User
+export const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
 
-// User login
-const loginUser = (req, res) => {
-    const { username, password } = req.body;
-
-    const user = users.find((user) => user.username === username);
-
-    if (!user) {
-        return res.status(400).json({ error: "Invalid Credentials" });
+  try {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Compare password with hashed password in database
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-        if (!isMatch) {
-            return res.status(400).json({ error: "Invalid Credentials" });
-        }
-
-        // Check if JWT secret key is defined
-        if (!process.env.JWT_SECRET_KEY) {
-            return res.status(500).json({ error: "JWT Secret Key not defined" });
-        }
-
-        // Generate JWT
-        const token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-
-        return res.status(200).json({ message: "Login Successful", token });
+    user = new User({
+      name,
+      email,
+      password
     });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      'your_jwt_secret', // Replace 'your_jwt_secret' with your actual secret
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 };
 
-export default {
-    loginUser,
+// Login User
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      'your_jwt_secret', // Replace 'your_jwt_secret' with your actual secret
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 };
