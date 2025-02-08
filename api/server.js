@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from 'mongoose';
 import cors from "cors";
 import helmet from "helmet"; // Import helmet
 import connectDB from './config/dbConfig.js';
@@ -15,12 +14,6 @@ const PORT = config.PORT || 5000;
 
 // Connect to MongoDB
 connectDB();
-
-const mongoURI = 'mongodb://localhost:27017/yourdbname'; // Replace 'yourdbname' with your actual database name
-
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
 
 // Middleware
 app.use(express.json());

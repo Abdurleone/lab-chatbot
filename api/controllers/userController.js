@@ -1,8 +1,6 @@
-// controllers/UserController.js
-
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import User from '../models/User.js'; // Assuming you have a User model
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js'; // Ensure the correct import path
 
 // Register User
 export const registerUser = async (req, res) => {
