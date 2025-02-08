@@ -1,5 +1,5 @@
-import React from "react";
 import './ChatWindow.css';
+import PropTypes from 'prop-types';
 
 function ChatWindow({ messages, isTyping }) {
   return (
@@ -13,5 +13,15 @@ function ChatWindow({ messages, isTyping }) {
     </div>
   );
 }
+
+ChatWindow.propTypes = {
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      sender: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  isTyping: PropTypes.bool.isRequired,
+};
 
 export default ChatWindow;
