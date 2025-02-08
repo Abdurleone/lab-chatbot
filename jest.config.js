@@ -1,5 +1,4 @@
 export const transform = {
-    "^.+\\.[t|j]sx?$": "babel-jest"
+    "^.+\\.jsx?$": "babel-jest",
 };
 export const testEnvironment = "node";
-  
