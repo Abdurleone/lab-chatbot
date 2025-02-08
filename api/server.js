@@ -7,6 +7,7 @@ import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
 import { registerUser, loginUser } from "./controllers/userController.js"; // Import the user controller
+import labServices from './services/labServices.js'; // Import labServices
 import resultsRouter from './routes/results.js';
 
 const app = express();
