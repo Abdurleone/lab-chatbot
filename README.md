@@ -1,16 +1,25 @@
-# Medical Lab Chatbot API
+# Lab Chatbot
 
-This is a Medical Lab Chatbot API built with Node.js, Express, and MongoDB. The API assists patients in retrieving lab results, checking test prices, booking appointments, and handling general inquiries.
+This project is a Medical Lab Chatbot application built with React for the frontend and Express.js for the backend. The application allows users to inquire about lab tests, book appointments, and retrieve lab test results.
 
-## Table of Contents
+## Features
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- Chatbot for lab test inquiries
+- Appointment booking
+- Lab test results retrieval
+- Responsive design with a modern UI
+
+## Technologies Used
+
+- Frontend: React, Axios, Font Awesome
+- Backend: Express.js, MongoDB, Mongoose
+- Styling: CSS, Tailwind CSS
+
+## Prerequisites
+
+- Node.js
+- Yarn or npm
+- MongoDB
 
 ## Installation
 
