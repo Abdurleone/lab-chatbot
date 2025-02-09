@@ -1,11 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import AppRoutes from './App.jsx'; // Add the .jsx extension
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <React.StrictMode>
     <AppRoutes />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
