@@ -1,0 +1,42 @@
+.appointments {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.appointments h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.appointments p {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.appointments .appointment-form {
+  margin-top: 30px;
+}
+
+.appointments .appointment-form input,
+.appointments .appointment-form select,
+.appointments .appointment-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.appointments .appointment-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.appointments .appointment-form button:hover {
+  background-color: #0056b3;
+}

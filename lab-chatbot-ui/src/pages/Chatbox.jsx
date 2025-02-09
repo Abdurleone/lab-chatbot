@@ -1,34 +1,41 @@
-import { useState } from "react";
-import axios from "axios";
-import ChatWindow from "../components/ChatWindow.jsx";
-import MessageInput from "../components/MessageInput.jsx";
+import React, { useState } from 'react';
 import './Chatbox.css';
 
 function Chatbox() {
-  const [messages, setMessages] = useState([
-    { text: "Hello! How can I assist you today?", sender: "bot" }
-  ]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
 
-  const handleSend = async (message) => {
-    setMessages([...messages, { text: message, sender: "user" }]);
-    setIsTyping(true);
-
-    try {
-      const response = await axios.post("http://localhost:5000/api/chat", { message });
-      setMessages((prev) => [...prev, { text: response.data.reply, sender: "bot" }]);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setMessages((prev) => [...prev, { text: "Sorry, something went wrong. Please try again.", sender: "bot" }]);
-    } finally {
-      setIsTyping(false);
+  const handleSendMessage = () => {
+    if (input.trim()) {
+      setMessages([...messages, { text: input, user: true }]);
+      setInput('');
     }
   };
 
   return (
-    <div className="chatbox">
-      <ChatWindow messages={messages} isTyping={isTyping} />
-      <MessageInput onSend={handleSend} />
+    <div className="chatbox-container">
+      <div className="chatbox-content">
+        <div className="chatbox-header">Chat with Us</div>
+        <div className="chatbox-messages">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`chatbox-message ${message.user ? 'user' : ''}`}
+            >
+              {message.text}
+            </div>
+          ))}
+        </div>
+        <div className="chatbox-input">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message..."
+          />
+          <button onClick={handleSendMessage}>Send</button>
+        </div>
+      </div>
     </div>
   );
 }
