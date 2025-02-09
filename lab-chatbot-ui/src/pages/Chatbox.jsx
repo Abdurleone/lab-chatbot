@@ -29,6 +29,12 @@ function Chatbox() {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="chatbox-container">
       <div className="chatbox-content">
@@ -48,6 +54,7 @@ function Chatbox() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Type a message..."
           />
           <button onClick={handleSendMessage}>Send</button>
