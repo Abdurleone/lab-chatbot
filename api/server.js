@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet"; // Import helmet
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import connectDB from './config/dbConfig.js';
 import config from './config/envConfig.js';
 import authMiddleware from "./middleware/authMiddleware.js";
@@ -112,6 +115,16 @@ app.post("/api/chat", (req, res) => {
 });
 
 app.use('/api/results', authMiddleware, resultsRouter);
+
+// Serve static files from the React app
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use(express.static(path.join(__dirname, '../lab-chatbot-ui/build')));
+
+// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../lab-chatbot-ui/build/index.html'));
+});
 
 // Error Handling Middleware (last)
 app.use(errorMiddleware);

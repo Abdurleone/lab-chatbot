@@ -7,8 +7,15 @@ function Chatbox() {
 
   const handleSendMessage = () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, user: true }]);
+      const newMessages = [...messages, { text: input, user: true }];
+      setMessages(newMessages);
       setInput('');
+
+      // Simulate a chatbot response
+      setTimeout(() => {
+        const botResponse = { text: `You said: ${input}`, user: false };
+        setMessages([...newMessages, botResponse]);
+      }, 1000);
     }
   };
 
