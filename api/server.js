@@ -108,9 +108,9 @@ app.post("/api/chat", (req, res) => {
         return res.status(400).json({ error: "Message is required!" });
     }
 
-    // Dummy response for now
+    console.log("Chat Message Received:", message); // Log the received message
+
     const response = { reply: `You said: ${message}` };
-    console.log("Chat Message Received:", message);
     res.json(response);
 });
 

@@ -5,26 +5,27 @@ function Chatbox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim()) {
       const newMessages = [...messages, { text: input, user: true }];
       setMessages(newMessages);
       setInput('');
 
-      // Simulate a chatbot response
-      setTimeout(() => {
-        let botResponse;
-        if (input.toLowerCase().includes('test')) {
-          botResponse = { text: 'We offer various lab tests including blood tests, urine tests, and X-rays.', user: false };
-        } else if (input.toLowerCase().includes('appointment')) {
-          botResponse = { text: 'You can book an appointment by providing your name and the test you need.', user: false };
-        } else if (input.toLowerCase().includes('result')) {
-          botResponse = { text: 'You can get your test results by providing your name.', user: false };
-        } else {
-          botResponse = { text: `You said: ${input}`, user: false };
-        }
+      // Send message to the backend API
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: input }),
+        });
+        const data = await response.json();
+        const botResponse = { text: data.reply, user: false };
         setMessages([...newMessages, botResponse]);
-      }, 1000);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
     }
   };
 
