@@ -1,13 +1,17 @@
+import LabTest from '../models/LabTest.js';
+import Appointment from '../models/Appointment.js';
+
+const getTests = async () => {
+  return await LabTest.find();
+};
+
+const getAppointments = async () => {
+  return await Appointment.find();
+};
+
 const labServices = {
-  tests: [
-    { name: 'Blood Test', price: 50 },
-    { name: 'Urine Test', price: 30 },
-    { name: 'X-Ray', price: 100 },
-  ],
-  appointments: [
-    { id: 1, patient: 'John Doe', test: 'Blood Test', status: 'Completed' },
-    { id: 2, patient: 'Jane Smith', test: 'Urine Test', status: 'Pending' },
-  ],
+  getTests,
+  getAppointments,
 };
 
 export default labServices;
