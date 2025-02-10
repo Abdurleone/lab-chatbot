@@ -1,7 +1,9 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faCalendarCheck, faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import Chatbox from '../components/Chatbox';
 
 function Home() {
   return (
@@ -30,6 +32,7 @@ function Home() {
           <Link to="/results">Get Results</Link>
         </div>
       </section>
+      <Chatbox />
     </div>
   );
 }
