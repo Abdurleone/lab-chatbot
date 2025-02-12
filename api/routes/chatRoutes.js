@@ -1,17 +1,46 @@
-import { Router } from "express";
-const router = Router();
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
 
-const responses = {
-  "hello": "Hello! How can I assist you today?",
-  "lab test prices": "Our lab test prices range from $20 to $200, depending on the test.",
-  "appointment": "You can book an appointment by calling 123-456-7890.",
-  "results status": "Results are typically available within 24-48 hours.",
-};
+const app = express();
+const PORT = 5000;
 
-router.post("/", (req, res) => {
-  const userMessage = req.body.message.toLowerCase();
-  const reply = responses[userMessage] || "I'm not sure about that. Please contact support.";
+// Middleware
+app.use(express.json());
+app.use(cors());
+app.use(helmet());
+
+// Predefined responses
+const responses = [
+  { keywords: ["hello", "hi"], reply: "Hello! How can I assist you today?" },
+  { keywords: ["lab test prices", "how much are lab tests", "test cost"], reply: "Our lab test prices range from $20 to $200, depending on the test." },
+  { keywords: ["appointment", "book appointment"], reply: "You can book an appointment by calling 123-456-7890." },
+  { keywords: ["results status", "test results"], reply: "Results are typically available within 24-48 hours." },
+  { keywords: ["hotel", "booking"], reply: "Welcome to Abdurleone! You can book a hotel room by visiting our website." }
+];
+
+// Chat endpoint
+app.post("/api/chat", (req, res) => {
+  const userMessage = req.body.message?.toLowerCase().trim();
+
+  // Validate input
+  if (!userMessage) {
+    return res.status(400).json({ error: "Message is required." });
+  }
+
+  // Find matching response
+  const response = responses.find(({ keywords }) =>
+    keywords.some(keyword => userMessage.includes(keyword))
+  );
+
+  const reply = response ? response.reply : "I'm not sure about that. Please contact support.";
+  console.log(`User: ${userMessage}`);
+  console.log(`Bot: ${reply}`);
+
   res.json({ reply });
 });
 
-export default router;
+// Start server
+app.listen(PORT, () => {
+  console.log(`✅ API running on http://localhost:${PORT}`);
+});

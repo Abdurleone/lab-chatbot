@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
-import './Chatbox.css';
+import React, { useState } from "react";
+import "./Chatbox.css";
 
 function Chatbox() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]); // Stores chat messages
+  const [input, setInput] = useState(""); // Stores user input
+  const [isOpen, setIsOpen] = useState(false); // Toggles chat visibility
 
+  // Handle sending a message
   const handleSendMessage = async () => {
     if (input.trim()) {
       const newMessages = [...messages, { text: input, user: true }];
       setMessages(newMessages);
-      setInput('');
+      setInput("");
 
-      // Send message to the backend API
       try {
-        const response = await fetch('http://localhost:5000/api/chat', {
-          method: 'POST',
+        // Send message to backend
+        const response = await fetch("http://localhost:5000/api/chat", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ message: input }),
         });
+
         const data = await response.json();
         const botResponse = { text: data.reply, user: false };
-        setMessages([...newMessages, botResponse]);
+        setMessages((prevMessages) => [...prevMessages, botResponse]);
       } catch (error) {
-        console.error('Error sending message:', error);
+        console.error("Error sending message:", error);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Something went wrong. Please try again later.", user: false },
+        ]);
       }
     }
   };
 
+  // Handle pressing Enter to send
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSendMessage();
     }
   };
 
+  // Toggle chatbox visibility
   const toggleChatbox = () => {
     setIsOpen(!isOpen);
   };
@@ -43,7 +51,7 @@ function Chatbox() {
   return (
     <div>
       <button className="chatbox-toggle" onClick={toggleChatbox}>
-        {isOpen ? 'Close Chat' : 'Chat with Us'}
+        {isOpen ? "Close Chat" : "Chat with Us"}
       </button>
       {isOpen && (
         <div className="chatbox-container">
@@ -53,7 +61,7 @@ function Chatbox() {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`chatbox-message ${message.user ? 'user' : ''}`}
+                  className={`chatbox-message ${message.user ? "user" : ""}`}
                 >
                   {message.text}
                 </div>
