@@ -40,3 +40,49 @@
 .appointments .appointment-form button:hover {
   background-color: #0056b3;
 }
+
+.appointments .tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.appointments .tabs button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.appointments .tabs button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.appointments .tabs button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.appointments .content {
+  text-align: left;
+}
+
+.appointments .timeslots ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.appointments .timeslots li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.appointments .timeslots li:hover {
+  background-color: #e9e9e9;
+}

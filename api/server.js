@@ -108,6 +108,18 @@ app.post("/api/chat", (req, res) => {
     res.json(response);
 });
 
+app.get("/api/timeslots", async (_, res) => {
+    console.log("Fetching available timeslots...");
+    const timeslots = [
+        { id: 1, time: "09:00 AM - 10:00 AM" },
+        { id: 2, time: "10:00 AM - 11:00 AM" },
+        { id: 3, time: "11:00 AM - 12:00 PM" },
+        { id: 4, time: "01:00 PM - 02:00 PM" },
+        { id: 5, time: "02:00 PM - 03:00 PM" },
+    ];
+    res.json({ timeslots });
+});
+
 app.use("/api/results", authMiddleware, resultsRouter);
 
 // Serve static files from React frontend
