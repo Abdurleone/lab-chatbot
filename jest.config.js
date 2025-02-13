@@ -12,4 +12,3 @@ module.exports = {
     clearMocks: true, // Automatically reset mocks between tests
 };
   
-  
