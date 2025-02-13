@@ -23,8 +23,12 @@ const responses = [
 app.post("/api/chat", (req, res) => {
   const userMessage = req.body.message?.toLowerCase().trim();
 
+  // Debugging log to ensure we are receiving the request properly
+  console.log("Received message:", userMessage);
+
   // Validate input
   if (!userMessage) {
+    console.error("Error: No message provided in request.");
     return res.status(400).json({ error: "Message is required." });
   }
 
@@ -34,9 +38,11 @@ app.post("/api/chat", (req, res) => {
   );
 
   const reply = response ? response.reply : "I'm not sure about that. Please contact support.";
-  console.log(`User: ${userMessage}`);
-  console.log(`Bot: ${reply}`);
+  
+  // Debugging log to ensure we have a reply
+  console.log("Reply to user:", reply);
 
+  // Send reply back to the client
   res.json({ reply });
 });
 
