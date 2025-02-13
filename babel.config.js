@@ -1,14 +1,9 @@
 module.exports = {
   presets: [
-    "@babel/preset-env"
+    "@babel/preset-env", // For transpiling modern JavaScript
+    "@babel/preset-react" // For React JSX support
   ],
   plugins: [
-    "@babel/plugin-transform-modules-commonjs"
-  ]
-};
-
-module.exports = {
-  transform: {
-    "^.+\\.jsx?$": "babel-jest",
-  },
+    "@babel/plugin-transform-modules-commonjs" // Ensures compatibility with CommonJS
+  ],
 };
