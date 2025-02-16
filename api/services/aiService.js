@@ -5,9 +5,10 @@ const aiPromptKey = config.AI_PROMPT_KEY;
 
 export const fetchAIResponse = async (prompt) => {
   try {
-    const response = await axios.post('https://gemini.google.com/app', {
-      prompt: prompt,
-      key: aiPromptKey
+    const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${aiPromptKey}`, {
+      contents: [{
+        parts: [{ text: prompt }]
+      }]
     });
     return response.data;
   } catch (error) {
