@@ -1,32 +1,40 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Response from './models/Response.js';
+import connectDB from './dbConfig.js';
+import LabTest from '../models/LabTest.js';
+import Appointment from '../models/Appointment.js';
 
 dotenv.config();
 
-const responses = [
-  { keywords: ["hello", "hi"], reply: "Hello! How can I assist you today?" },
-  { keywords: ["lab test prices", "how much are lab tests", "test cost"], reply: "Our lab test prices range from $20 to $200, depending on the test." },
-  { keywords: ["appointment", "book appointment"], reply: "You can book an appointment by calling 123-456-7890." },
-  { keywords: ["results status", "test results"], reply: "Results are typically available within 24-48 hours." },
-  { keywords: ["hotel", "booking"], reply: "Welcome to Abdurleone! You can book a hotel room by visiting our website." }
+// Connect to MongoDB
+connectDB();
+
+// Sample data
+const labTests = [
+  { name: 'Blood Test', price: 50 },
+  { name: 'Urine Test', price: 30 },
+  { name: 'X-Ray', price: 100 },
 ];
 
+const appointments = [
+  { patient: 'John Doe', test: 'Blood Test', status: 'Pending' },
+  { patient: 'Jane Smith', test: 'Urine Test', status: 'Completed' },
+];
+
+// Populate the database
 const populateDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB Connected');
+    await LabTest.deleteMany();
+    await Appointment.deleteMany();
 
-    await Response.deleteMany({});
-    console.log('✅ Existing responses deleted');
+    await LabTest.insertMany(labTests);
+    await Appointment.insertMany(appointments);
 
-    await Response.insertMany(responses);
-    console.log('✅ Responses inserted');
-
-    process.exit();
-  } catch (err) {
-    console.error(`❌ Error: ${err.message}`);
-    process.exit(1);
+    console.log('Database populated successfully!');
+    mongoose.connection.close();
+  } catch (error) {
+    console.error('Error populating database:', error);
+    mongoose.connection.close();
   }
 };
 

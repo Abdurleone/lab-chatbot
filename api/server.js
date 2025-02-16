@@ -1,10 +1,12 @@
+// server.js
+
 import express from "express";
 import sanitizeHtml from "sanitize-html";
 import cors from "cors";
 import helmet from "helmet";
-import path from "path";
+import rateLimit from "express-rate-limit";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 import connectDB from "./config/dbConfig.js";
 import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
@@ -29,13 +31,20 @@ app.use(cors());
 app.use(helmet());
 app.use(loggerMiddleware);
 
+// Rate Limiting Middleware
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per window
+});
+app.use(limiter);
+
 // Routes
 app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
 });
 
-app.post('/api/users/register', registerUser);
-app.post('/api/users/login', loginUser);
+app.post("/api/users/register", registerUser);
+app.post("/api/users/login", loginUser);
 
 app.get("/api/protected", authMiddleware, (_, res) => {
     res.send("This is a protected route!");
@@ -144,4 +153,3 @@ app.listen(PORT, () => {
 });
 
 export default app;
-
