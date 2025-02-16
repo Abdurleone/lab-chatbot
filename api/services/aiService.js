@@ -5,7 +5,7 @@ const aiPromptKey = config.AI_PROMPT_KEY;
 
 export const fetchAIResponse = async (prompt) => {
   try {
-    const response = await axios.post('https:chatgpt.com', {
+    const response = await axios.post('https://gemini.google.com/app', {
       prompt: prompt,
       key: aiPromptKey
     });
