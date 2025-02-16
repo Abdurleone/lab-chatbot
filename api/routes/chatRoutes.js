@@ -1,26 +1,35 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import Response from "../models/Response.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-// Predefined responses
-const responses = [
-  { keywords: ["hello", "hi"], reply: "Hello! How can I assist you today?" },
-  { keywords: ["lab test prices", "how much are lab tests", "test cost"], reply: "Our lab test prices range from $20 to $200, depending on the test." },
-  { keywords: ["appointment", "book appointment"], reply: "You can book an appointment by calling 123-456-7890." },
-  { keywords: ["results status", "test results"], reply: "Results are typically available within 24-48 hours." },
-  { keywords: ["hotel", "booking"], reply: "Welcome to Abdurleone! You can book a hotel room by visiting our website." }
-];
+// MongoDB connection setup
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error(`❌ MongoDB Connection Error: ${err.message}`);
+    process.exit(1);
+  }
+};
+
+connectDB();
 
 // Chat endpoint
-app.post("/api/chat", (req, res) => {
+app.post("/api/chat", async (req, res) => {
   const userMessage = req.body.message?.toLowerCase().trim();
 
   // Debugging log to ensure we are receiving the request properly
@@ -32,18 +41,23 @@ app.post("/api/chat", (req, res) => {
     return res.status(400).json({ error: "Message is required." });
   }
 
-  // Find matching response
-  const response = responses.find(({ keywords }) =>
-    keywords.some(keyword => userMessage.includes(keyword))
-  );
+  try {
+    // Find matching response from the database
+    const response = await Response.findOne({
+      keywords: { $in: userMessage.split(" ") }
+    });
 
-  const reply = response ? response.reply : "I'm not sure about that. Please contact support.";
-  
-  // Debugging log to ensure we have a reply
-  console.log("Reply to user:", reply);
+    const reply = response ? response.reply : "I'm not sure about that. Please contact support.";
+    
+    // Debugging log to ensure we have a reply
+    console.log("Reply to user:", reply);
 
-  // Send reply back to the client
-  res.json({ reply });
+    // Send reply back to the client
+    res.json({ reply });
+  } catch (error) {
+    console.error("Error fetching response from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 // Start server

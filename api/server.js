@@ -10,9 +10,11 @@ import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
+import apiKeyMiddleware from "./middleware/apiKeyMiddleware.js";
 import { registerUser, loginUser } from "./controllers/userController.js";
 import labServices from "./services/labServices.js";
 import resultsRouter from "./routes/results.js";
+import aiRoutes from "./routes/aiRoutes.js";
 import Appointment from "./models/Appointment.js";
 
 const app = express();
@@ -39,7 +41,7 @@ app.get("/api/protected", authMiddleware, (_, res) => {
     res.send("This is a protected route!");
 });
 
-app.get("/api/inquiry", (_, res) => {
+app.get("/api/inquiry", apiKeyMiddleware, (_, res) => {
     const response = { message: "How can I assist you with lab services today?" };
     console.log("Response Sent:", response);
     res.json(response);
@@ -121,6 +123,7 @@ app.get("/api/timeslots", async (_, res) => {
 });
 
 app.use("/api/results", authMiddleware, resultsRouter);
+app.use("/api", aiRoutes); // Integrate AI routes
 
 // Serve static files from React frontend
 const __filename = fileURLToPath(import.meta.url);
@@ -137,7 +140,7 @@ app.use(errorMiddleware);
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`✅ API running on port ${PORT}`);
+    console.log(`✅ API running on http://localhost:${PORT}`);
 });
 
 export default app;
