@@ -13,11 +13,11 @@ import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
-import apiKeyMiddleware from "./middleware/apiKeyMiddleware.js";
+import apiKeyMiddleware from "./middleware/apikeyMiddleware.js"; // Ensure this import is correct
 import { registerUser, loginUser } from "./controllers/userController.js";
 import labServices from "./services/labServices.js";
 import resultsRouter from "./routes/results.js";
-import aiRoutes from "./routes/aiRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js"; // Ensure this import is correct
 import Appointment from "./models/Appointment.js";
 
 const app = express();
