@@ -4,9 +4,10 @@ import express from "express";
 import sanitizeHtml from "sanitize-html";
 import cors from "cors";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
-import path, { dirname } from "path";
+import rateLimit from "express-rate-limit"; // Import express-rate-limit
+import path from "path";
 import { fileURLToPath } from "url";
+import { dirname } from "path";
 import connectDB from "./config/dbConfig.js";
 import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
@@ -43,8 +44,8 @@ app.get("/", (_, res) => {
     res.send("Welcome to the Medical Lab Chatbot API!");
 });
 
-app.post("/api/users/register", registerUser);
-app.post("/api/users/login", loginUser);
+app.post('/api/users/register', registerUser);
+app.post('/api/users/login', loginUser);
 
 app.get("/api/protected", authMiddleware, (_, res) => {
     res.send("This is a protected route!");
