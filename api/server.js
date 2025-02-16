@@ -1,8 +1,8 @@
 // server.js
 
 import express from "express";
-import sanitizeHtml from "sanitize-html";
-import cors from "cors";
+import sanitizeHtml from "sanitize-html"; // Ensure this import is correct
+import cors from "cors"; // Ensure this import is correct
 import helmet from "helmet";
 import rateLimit from "express-rate-limit"; // Import express-rate-limit
 import path from "path";
