@@ -38,12 +38,16 @@ This project is a Medical Lab Chatbot application built with React for the front
     ```properties
     MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/
     PORT=5000
+    JWT_SECRET=your_jwt_secret
+    GEMINI_API_KEY=your_gemini_api_key
     ```
 
 ## Configuration
 
 - `MONGO_URI`: Your MongoDB connection string.
 - `PORT`: The port on which the server will run (default is 5000).
+- `JWT_SECRET`: The secret key for JWT authentication.
+- `GEMINI_API_KEY`: The API key for the Google Gemini AI service.
 
 ## Usage
 
@@ -140,10 +144,19 @@ This project is a Medical Lab Chatbot application built with React for the front
 
 ### Chat
 
-- **POST /api/chat**: Sends a chat message to the chatbot.
+- **POST /api/chat**: Sends a chat message to the chatbot and gets a response from the AI service.
     ```json
     {
         "message": "Hello"
+    }
+    ```
+
+### AI
+
+- **POST /api/ai**: Sends a prompt to the AI service and gets a response.
+    ```json
+    {
+        "prompt": "Hello, AI!"
     }
     ```
 

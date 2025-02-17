@@ -10,7 +10,10 @@ export const fetchAIResponse = async (prompt) => {
         parts: [{ text: prompt }]
       }]
     });
-    return response.data;
+
+    // Extract the text content from the response
+    const aiResponse = response.data.candidates[0].content.parts[0].text;
+    return aiResponse;
   } catch (error) {
     console.error('Error fetching AI response:', error);
     throw error;

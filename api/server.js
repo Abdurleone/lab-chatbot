@@ -13,12 +13,13 @@ import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
-import apiKeyMiddleware from "./middleware/apikeyMiddleware.js";
+import apiKeyMiddleware from "./middleware/apiKeyMiddleware.js";
 import { registerUser, loginUser } from "./controllers/userController.js";
 import labServices from "./services/labServices.js";
 import resultsRouter from "./routes/results.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import Appointment from "./models/Appointment.js";
+import { fetchAIResponse } from "./services/aiService.js"; // Import the AI service
 
 const app = express();
 const PORT = config.PORT || 5000;
@@ -106,7 +107,7 @@ app.post("/api/appointments", async (req, res) => {
     res.status(201).json({ message: "Appointment booked successfully!", appointment: newAppointment });
 });
 
-app.post("/api/chat", (req, res) => {
+app.post("/api/chat/ai", async (req, res) => { // Updated route
     let { message } = req.body;
     message = sanitizeHtml(message);
 
@@ -116,8 +117,13 @@ app.post("/api/chat", (req, res) => {
 
     console.log("Chat Message Received:", message);
 
-    const response = { reply: `You said: ${message}` };
-    res.json(response);
+    try {
+        const aiResponse = await fetchAIResponse(message);
+        res.json({ reply: aiResponse });
+    } catch (error) {
+        console.error('Failed to fetch AI response:', error);
+        res.status(500).json({ error: 'Failed to fetch AI response' });
+    }
 });
 
 app.get("/api/timeslots", async (_, res) => {
