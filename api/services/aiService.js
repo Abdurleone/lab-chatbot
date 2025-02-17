@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config/envConfig.js';
 
-const aiPromptKey = config.AI_PROMPT_KEY;
+const aiPromptKey = config.GEMINI_API_KEY;
 
 export const fetchAIResponse = async (prompt) => {
   try {
