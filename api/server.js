@@ -1,10 +1,10 @@
 // server.js
 
 import express from "express";
-import sanitizeHtml from "sanitize-html"; // Ensure this import is correct
-import cors from "cors"; // Ensure this import is correct
+import sanitizeHtml from "sanitize-html";
+import cors from "cors";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit"; // Import express-rate-limit
+import rateLimit from "express-rate-limit";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -13,11 +13,11 @@ import config from "./config/envConfig.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import loggerMiddleware from "./middleware/loggerMiddleware.js";
-import apiKeyMiddleware from "./middleware/apikeyMiddleware.js"; // Ensure this import is correct
+import apiKeyMiddleware from "./middleware/apikeyMiddleware.js";
 import { registerUser, loginUser } from "./controllers/userController.js";
 import labServices from "./services/labServices.js";
 import resultsRouter from "./routes/results.js";
-import aiRoutes from "./routes/aiRoutes.js"; // Ensure this import is correct
+import aiRoutes from "./routes/aiRoutes.js";
 import Appointment from "./models/Appointment.js";
 
 const app = express();
