@@ -19,3 +19,15 @@ export const fetchAIResponse = async (prompt) => {
     throw error;
   }
 };
+
+export const fetchData = async (query) => {
+  // Implement your data retrieval logic here
+  // For example, you can query a database or an external API
+  try {
+    const response = await axios.get(`https://api.example.com/data?query=${query}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching data:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};

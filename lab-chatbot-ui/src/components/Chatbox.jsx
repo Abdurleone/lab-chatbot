@@ -57,6 +57,10 @@ function Chatbox() {
 
   // Toggle the chatbox visibility
   const toggleChatbox = () => {
+    if (isOpen) {
+      // Reset the chat messages when closing the chatbox
+      setMessages([]);
+    }
     setIsOpen(!isOpen);
   };
 
